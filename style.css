@@ -108,3 +108,8 @@ body[data-page="podcast"] .card{
   .group-page{flex-direction:column}
   .continent-list{width:100%;display:flex;overflow:auto}
 }
+.interview p {
+    color: #2e4d38;
+    margin-bottom: 18px;
+    line-height: 1.6;
+}
