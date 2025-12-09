@@ -1,208 +1,52 @@
-/* ------------------------------
-   POLICE
---------------------------------*/
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
-
-body {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
+/* CONTENEUR DE LA PAGE */
+.page-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 20px;
 }
 
-/* ------------------------------
-   COULEURS PRINCIPALES
---------------------------------*/
-:root {
-    --orange: #ff7b00;
-    --vert: #1c3928;
-    --blanc: #ffffff;
-}
-
-/* ------------------------------
-   FONDS DE PAGES
---------------------------------*/
-.fond-blanc {
-    background-color: var(--blanc);
-    color: var(--vert);
-}
-
-.fond-vert {
-    background-color: var(--vert);
-    color: var(--blanc);
-}
-
-/* ------------------------------
-   MENU
---------------------------------*/
-nav {
-    background-color: var(--vert);
-    padding: 18px 0;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 35px;
-    padding: 0;
-    margin: 0;
-}
-
-nav a {
-    color: var(--blanc);
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-nav a:hover,
-nav a.active {
-    color: var(--orange);
-}
-
-/* ------------------------------
-   TITRES & TEXTES
---------------------------------*/
+/* BANNIÈRES TITRES */
 .titre-orange {
-    color: var(--orange);
-    font-size: 40px;
-    margin-bottom: 25px;
+    color: #ff7b00;
+    font-family: 'AGRANDIR', sans-serif;
+    font-size: 2.5rem;
     text-align: center;
+    margin-bottom: 20px;
 }
 
+/* Introduction */
 .intro-texte {
     text-align: center;
-    max-width: 800px;
-    margin: auto;
+    color: #2e4d38;
     margin-bottom: 40px;
-    line-height: 1.6;
+    font-size: 1.2rem;
 }
 
-/* ------------------------------
-   CONTENEUR DE PAGE
---------------------------------*/
-.page-container {
-    width: 80%;
-    max-width: 900px;
-    margin: 50px auto;
-    padding-bottom: 50px;
-}
-
-/* ------------------------------
-   BULLES / CARTES
---------------------------------*/
-.temoignages-liste,
-.destinations-liste,
-.conseils-liste {
-    display: flex;
-    flex-direction: column;
+/* BULLES DE TEMOIGNAGES */
+.temoignages-liste {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 25px;
-    align-items: center;
 }
 
 .temo-bulle {
-    width: 80%;
-    max-width: 600px;
-    padding: 25px;
-    background-color: var(--vert);
+    background: #ffffff;
+    border: 2px solid #2e4d38;
     border-radius: 20px;
-    text-align: center;
-    color: var(--blanc);
+    padding: 20px;
     text-decoration: none;
+    color: #2e4d38;
     transition: 0.3s;
 }
 
 .temo-bulle:hover {
-    transform: scale(1.05);
-    background-color: #214131;
+    background: #e9f3ed;
+    transform: scale(1.03);
 }
 
-/* ------------------------------
-   INTERVIEWS
---------------------------------*/
-.interview p {
-    line-height: 1.6;
-    margin-bottom: 15px;
-    font-size: 17px;
+.temo-bulle h3 {
+    margin-top: 0;
+    color: #ff7b00;
 }
 
-.interview strong {
-    color: var(--orange);
-}
 
-/* ------------------------------
-   DESTINATIONS
---------------------------------*/
-.destination-bloc {
-    background-color: var(--vert);
-    color: var(--blanc);
-    padding: 25px;
-    border-radius: 18px;
-    width: 80%;
-    max-width: 600px;
-    text-align: center;
-    margin: auto;
-    margin-bottom: 35px;
-    transition: 0.3s;
-}
-
-.destination-bloc:hover {
-    transform: scale(1.05);
-}
-
-.bouton-orange {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 15px;
-    background-color: var(--orange);
-    color: var(--blanc);
-    text-decoration: none;
-    border-radius: 10px;
-    transition: 0.3s;
-}
-
-.bouton-orange:hover {
-    filter: brightness(0.9);
-}
-
-/* ------------------------------
-   CONSEILS : BULLES RONDES
---------------------------------*/
-.conseil-bulle {
-    background-color: var(--vert);
-    color: var(--blanc);
-    padding: 25px;
-    border-radius: 25px;
-    width: 80%;
-    max-width: 600px;
-    text-align: center;
-    transition: 0.3s;
-}
-
-.conseil-bulle:hover {
-    transform: scale(1.05);
-}
-
-/* ------------------------------
-   RESPONSIVE
---------------------------------*/
-@media (max-width: 700px) {
-    .page-container {
-        width: 90%;
-    }
-
-    nav ul {
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .titre-orange {
-        font-size: 32px;
-    }
-
-    .temo-bulle,
-    .destination-bloc,
-    .conseil-bulle {
-        width: 100%;
-    }
-}
