@@ -1,89 +1,49 @@
-// menu toggle for small screens
-document.addEventListener('click', function(e){
-  if(!e.target.closest) return;
-});
-const toggle = document.querySelectorAll('.menu-toggle');
-toggle.forEach(btn=>{
-  btn.addEventListener('click', ()=> {
-    const nav = document.querySelector('.main-nav');
-    if(nav) nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-  });
+// Animation des bulles (effet d’apparition)
+const bulles = document.querySelectorAll(".temo-bulle, .destination-bloc, .conseil-bulle");
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = 1;
+            entry.target.style.transform = "translateY(0)";
+        }
+    });
+}, { threshold: 0.2 });
+
+bulles.forEach(bulle => {
+    bulle.style.opacity = 0;
+    bulle.style.transform = "translateY(30px)";
+    bulle.style.transition = "0.6s";
+    observer.observe(bulle);
 });
 
-// set active menu visual based on current file (simple)
-(function setActive(){
-  const page = document.body.dataset.page || '';
-  const links = document.querySelectorAll('.main-nav .nav-item');
-  links.forEach(a=>{
-    if(a.getAttribute('href') && a.getAttribute('href').includes(page)) {
-      a.classList.add('active-link');
+// Bouton retour en haut
+const btnTop = document.createElement("button");
+btnTop.innerText = "↑";
+btnTop.id = "btnTop";
+btnTop.style.position = "fixed";
+btnTop.style.bottom = "25px";
+btnTop.style.right = "25px";
+btnTop.style.padding = "10px 13px";
+btnTop.style.borderRadius = "50%";
+btnTop.style.background = "#ff7b00";
+btnTop.style.color = "white";
+btnTop.style.border = "none";
+btnTop.style.fontSize = "20px";
+btnTop.style.cursor = "pointer";
+btnTop.style.display = "none";
+btnTop.style.zIndex = "50";
+document.body.appendChild(btnTop);
+
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+        btnTop.style.display = "block";
     } else {
-      a.classList.remove('active-link');
+        btnTop.style.display = "none";
     }
-  });
-})();
+});
 
-// --- Groupe: simple client-side chat per continent (no backend, stored in memory) ---
-(function chatModule(){
-  const chatBox = document.getElementById('chatBox');
-  const form = document.getElementById('chatForm');
-  const nameInput = document.getElementById('chatName');
-  const msgInput = document.getElementById('chatMsg');
-  const currentCont = document.getElementById('current-continent');
-  const continentBtns = document.querySelectorAll('.continent-btn');
+btnTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+});
 
-  if(!chatBox || !form) return;
-
-  // simple in-memory store: { continentName: [messages] }
-  const store = { 'Global': [] };
-  let active = 'Global';
-
-  // seed example message
-  store['Europe'] = [{name:'Ana', text:'Salut ! Quels conseils pour l\'Espagne ?', time: new Date().toLocaleTimeString()}];
-  store['Afrique'] = [{name:'Sam', text:'Des idées pour visiter le Maroc ?', time: new Date().toLocaleTimeString()}];
-
-  function render(){
-    chatBox.innerHTML = '';
-    const list = store[active] || [];
-    list.forEach(m=>{
-      const el = document.createElement('div');
-      el.className = 'chat-msg';
-      el.innerHTML = `<div class="meta">${m.name} • ${m.time}</div><div class="text">${escapeHtml(m.text)}</div>`;
-      chatBox.appendChild(el);
-    });
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-
-  function escapeHtml(unsafe) {
-    return unsafe.replace(/[&<"'>]/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]; });
-  }
-
-  // change continent when clicking buttons
-  continentBtns.forEach(b=>{
-    b.addEventListener('click', ()=>{
-      const name = b.dataset.cont;
-      if(!store[name]) store[name] = [];
-      active = name;
-      if(currentCont) currentCont.textContent = active;
-      render();
-    });
-  });
-
-  form.addEventListener('submit', (ev)=>{
-    ev.preventDefault();
-    const name = (nameInput.value || 'Anonyme').trim();
-    const text = (msgInput.value || '').trim();
-    if(!text) return;
-    const msg = { name, text, time: new Date().toLocaleTimeString() };
-    store[active].push(msg);
-    msgInput.value = '';
-    render();
-  });
-
-  // initial render
-  if(currentCont) currentCont.textContent = active;
-  render();
-})();
-
-// little helper: disable links with class .disabled
-document.querySelectorAll('a.disabled').forEach(a=>{ a.addEventListener('click', (e)=> e.preventDefault()); });
